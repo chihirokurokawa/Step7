@@ -11,6 +11,6 @@ $factory->define(Company::class, function (Faker $faker) {
         'company_name' => $faker->company,
         'street_address' => $faker->address,
         'representative_name' => $faker->name,
-        'created_at' => $faker->datetime($max = 'now', $timezone = date_default_timezone_get()),
+       
     ];
 });

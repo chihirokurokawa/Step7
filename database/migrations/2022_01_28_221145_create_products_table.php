@@ -16,7 +16,7 @@ class CreateProductsTable extends Migration
         if (!Schema::hasTable('products')){
             Schema::create('products', function (Blueprint $table) {
                 $table->bigIncrements('id');
-                $table->string('company_id');
+                $table->integer('company_id');
                 $table->string('product_name');
                 $table->string('price');
                 $table->string('stock');
