@@ -13,10 +13,14 @@ class CreateSalesTable extends Migration
      */
     public function up()
     {
-        Schema::create('sales', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('sales')){
+            Schema::create('sales', function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->string('product_id');
+                $table->timestamps();
+            });
+        }
+        
     }
 
     /**

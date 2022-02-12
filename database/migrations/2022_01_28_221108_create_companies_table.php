@@ -11,12 +11,19 @@ class CreateCompaniesTable extends Migration
      *
      * @return void
      */
+   
     public function up()
     {
-        Schema::create('companies', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('companies')){
+            Schema::create('companies', function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->string('company_name');
+                $table->text('street_address');
+                $table->text('representative_name');
+                $table->timestamps();
+            });
+        }
+        
     }
 
     /**

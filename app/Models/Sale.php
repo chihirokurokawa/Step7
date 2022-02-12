@@ -1,0 +1,18 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Sale extends Model
+{
+    //テーブル名　テーブルとモデルが紐ずく
+    protected $table ='sales';
+
+    //可変項目
+    protected $fillable =
+    [
+        '',
+        ''
+    ];
+}
