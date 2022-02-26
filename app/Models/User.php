@@ -12,8 +12,10 @@ class User extends Model
     //可変項目
     protected $fillable =
     [
-        '',
-        ''
+        'user_name',
+        'email',
+        'password',
+        'email_verified_at'
     ];
 
 }
