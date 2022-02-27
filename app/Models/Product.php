@@ -19,4 +19,12 @@ class Product extends Model
         'comment',
         'img_path'
     ];
+    public function sale()
+    {
+        return $this->belongsTo('App\Models\Sale');
+    }
+    public function companies()
+    {
+        return $this->hasMany('App\Models\Company');
+    }
 }

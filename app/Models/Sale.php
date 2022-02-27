@@ -14,4 +14,9 @@ class Sale extends Model
     [
         'product_id'
     ];
+
+    public function products()
+    {
+        return $this->hasMany('App\Models\Product');
+    }
 }

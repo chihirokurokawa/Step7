@@ -16,4 +16,9 @@ class Company extends Model
         'street_address',
         'representative_name'
     ];
+    public function product()
+    {
+        return $this -> belongsTo('App\Models\Product');
+    }
+
 }
