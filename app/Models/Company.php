@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Models;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+
 
 class Company extends Model
 {
@@ -16,9 +18,6 @@ class Company extends Model
         'street_address',
         'representative_name'
     ];
-    public function product()
-    {
-        return $this -> belongsTo('App\Models\Product');
-    }
+    
 
 }

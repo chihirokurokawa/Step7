@@ -61,7 +61,7 @@ class MgtController extends Controller
         \DB::beginTransaction();
         try {
             //商品情報を登録
-              Product::create($inputs);
+            Product::create($inputs);
             \DB::commit();
         } catch(\Throwable $e) {
             \DB::rollback();

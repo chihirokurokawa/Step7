@@ -11,16 +11,28 @@
         @endif
       <table class="table table-striped">
           <tr>
-              <th>会社名</th>
+              <th>id</th>
+              <th>商品画像</th>
               <th>商品名</th>
-              <th>日付</th>
+              <th>価格</th>
+              <th>在庫数</th>
+              <th>メーカー名</th>
+
+              <th>詳細表示</th>
+              <th>削除</th>
 
           </tr>
           @foreach($products as $product)
           <tr>
               <td>{{ $product->id }}</td>
-              <td><a href="/product/{{ $product->id }}">{{ $product->product_name }}</a></td>
-              <td>{{ $product->updated_at }}</td>
+              <td>{{ $product->img_path }}</td>
+              <td>{{ $product->product_name }}</td>
+              <td>{{ $product->price }}</td>
+              <td>{{ $product->stock }}</td>
+              <td>{{ $product->company_name }}</td>
+
+              <td><a href="/product/{{ $product->id }}">{{ '詳細表示' }}</a></td>
+            　<td></td>
           </tr>
           @endforeach
       </table>

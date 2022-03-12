@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Sale;
+use App\Models\Company;
 
 class Product extends Model
 {
@@ -21,10 +23,11 @@ class Product extends Model
     ];
     public function sale()
     {
-        return $this->belongsTo('App\Models\Sale');
+        return $this->hasOne('App\Sale');
     }
-    public function companies()
+    public function company()
     {
-        return $this->hasMany('App\Models\Company');
+        return $this->belongsTo('App\Company');
     }
+    
 }

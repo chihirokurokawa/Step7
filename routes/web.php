@@ -16,7 +16,7 @@ Route::get('/', 'MgtController@showList')->name('mgts');
 //登録画面の表示
 Route::get('/product/create', 'MgtController@showCreate')->name('create');
 //商品登録
-Route::post('/create/store', 'MgtController@exeStore')->name('store');
+Route::post('/product/store', 'MgtController@exeStore')->name('store');
 //詳細を表示
 Route::get('/product/{id}', 'MgtController@showDetail')->name('show');
 

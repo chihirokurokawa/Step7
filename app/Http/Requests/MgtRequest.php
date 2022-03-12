@@ -29,7 +29,7 @@ class MgtRequest extends FormRequest
             'price' => 'required',
             'stock' => 'required',
             'comment' => 'required',
-            'imag_path' => 'required'
+            'img_path' => 'required'
 
             
         ];
