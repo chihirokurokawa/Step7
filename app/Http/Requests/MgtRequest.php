@@ -30,7 +30,7 @@ class MgtRequest extends FormRequest
             'stock' => 'required',
             'comment' => 'required',
             'img_path' => 'required'
-
+            // required＝必須
             
         ];
     }

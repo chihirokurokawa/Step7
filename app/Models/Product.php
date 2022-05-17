@@ -21,13 +21,15 @@ class Product extends Model
         'comment',
         'img_path'
     ];
-    public function sale()
-    {
-        return $this->hasOne('App\Sale');
-    }
     public function company()
     {
-        return $this->belongsTo('App\Company');
+        return $this->belongsTo('App\Models\Company');
+    }
+    public function sales()
+    {
+        return $this->hasMany('App\Models\Sale');
     }
     
+
+
 }

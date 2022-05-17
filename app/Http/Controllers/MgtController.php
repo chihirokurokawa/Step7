@@ -15,9 +15,22 @@ class MgtController extends Controller
      */
     public function showList()
     {
-        $products = Product::all();
+       
+        
+        // $products = Product::all();
+        $products = \DB::table('products')
+        ->join('companies','products.company_id','=','companies.id')
+        ->get();
 
         return view('mgt.list', ['products' => $products]);
+        
+
+        //$companies = Company::where('company_id', Company::id())
+        
+        // $products = Product::with('company')->where('id, $id')->first();
+        
+        // return view ('mgt.list')->with('product','$product');
+
     }
 
 
@@ -28,13 +41,17 @@ class MgtController extends Controller
      */
     public function showDetail($id)
     {
-        $product = Product::find($id);
+
+        $product = Product::with('company:id,company_name')->find($id);
+       
 
         if (is_null($product)) {
             \Session::flash('err_msg', 'データがありません。');
             return redirect(route('mgts'));
         }
 
+        // dd($product);
+        
         return view('mgt.detail', ['product' => $product]);
     }
 
@@ -45,9 +62,13 @@ class MgtController extends Controller
      */
 
     public function showCreate() {
-        return view('mgt.form');
+
+        $companies = config('pull.company_name');
+        
+        return view('mgt.form',['companies' => $companies]);
     }
 
+    
     /**
      * 商品を登録する
      * 
@@ -56,19 +77,35 @@ class MgtController extends Controller
 
     public function exeStore(MgtRequest $request) 
     {
+        // dd($request->all());
         //商品情報のデータを受け取る
         $inputs = $request->all();
+        // 商品情報の登録
+        Product::create($inputs);
+        // $products = \DB::table('products')
+        // ->join('companies','products.company_id','=','companies.id')
+        // ->get();
+        $products = \DB::table('products')
+        ->join('companies','products.company_id','=','companies.id')
+        ->get();
+        
         \DB::beginTransaction();
         try {
             //商品情報を登録
             Product::create($inputs);
             \DB::commit();
+        // } catch(Exception $e) {
         } catch(\Throwable $e) {
             \DB::rollback();
             abort(500);
+            // echo "例外キャッチ：",$e->getMessage(),"\n";
+            
         }
-       
+
         \Session::flash('err_msg', '商品を登録しました');
-        return redirect(route('mgts'));
+
+        
+        return redirect(route('product'));
+    
     }
 }

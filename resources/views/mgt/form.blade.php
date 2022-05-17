@@ -8,9 +8,9 @@
             @csrf
             
             <div class="form-group">
-                <label for="product_name">
-                    商品名
-                </label>
+            <label for="product_name">
+            商品名
+            </label>
                 <input
                     id="product_name"
                     name="product_name"
@@ -24,23 +24,24 @@
                     </div>
                 @endif
             </div>
+            
             <div class="form-group">
-                <label for="company_name">
-                    メーカー
-                </label>
-                <input
-                    id="company_name"
-                    name="company_name"
-                    class="form-control"
-                    value="{{ old('company_name') }}"
-                    type="text"
-                >
+            <label for="company_name">
+                メーカー名
+            </label>
+            <select type="text" class="form-control" name="company_name">
+            @foreach($companies as $key => $value)
+            <option value="{{ $value }}">{{ $value }}</option>
+            @endforeach
+            </select>
                 @if ($errors->has('company_name'))
                     <div class="text-danger">
                         {{ $errors->first('company_name') }}
                     </div>
                 @endif
             </div>
+
+
             <div class="form-group">
                 <label for="price">
                     価格

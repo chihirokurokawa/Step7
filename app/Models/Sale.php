@@ -14,9 +14,10 @@ class Sale extends Model
     [
         'product_id'
     ];
-
-    public function products()
+    public function product()
     {
-        return $this->hasMany('App\Product');
+        return $this->belongsTo('App\Models\Product');
     }
+    
+    
 }

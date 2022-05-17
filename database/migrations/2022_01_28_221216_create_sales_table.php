@@ -16,7 +16,12 @@ class CreateSalesTable extends Migration
         if (!Schema::hasTable('sales')){
             Schema::create('sales', function (Blueprint $table) {
                 $table->bigIncrements('id');
-                $table->integer('product_id');
+                //外部キー制約
+                $table->integer('product_id')
+                      ->unsigned()
+                      ->foreign('product_id')
+                      ->references('id')
+                      ->on('products');
                 $table->timestamps();
             });
         }

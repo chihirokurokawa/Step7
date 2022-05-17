@@ -16,13 +16,20 @@ class CreateProductsTable extends Migration
         if (!Schema::hasTable('products')){
             Schema::create('products', function (Blueprint $table) {
                 $table->bigIncrements('id');
-                $table->integer('company_id');
+                //外部キー制約
+                $table->biginteger('company_id')
+                      ->unsigned()
+                      ->foreign('company_id')
+                      ->references('id')
+                      ->on('companies');
                 $table->string('product_name');
                 $table->string('price');
                 $table->string('stock');
                 $table->text('comment');
                 $table->text('img_path');
                 $table->timestamps();
+
+            
             });
         }
         

@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Models;
-namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,5 +18,10 @@ class Company extends Model
         'representative_name'
     ];
     
-
+    
+    public function products()
+    {
+        return $this->hasMany('App\Models\Product');
+    }
+    
 }
