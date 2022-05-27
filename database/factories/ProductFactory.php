@@ -12,7 +12,7 @@ $factory->define(Product::class, function (Faker $faker) {
         'price' => $faker->numberBetween($min = 110, $max = 150),
         'stock' => $faker->numberBetween($min = 0, $max = 50),
         'comment' => $faker->sentence,
-        'img_path' => $faker->image,
+        'img_path' => $faker->imageUrl,
        
     ];
 });

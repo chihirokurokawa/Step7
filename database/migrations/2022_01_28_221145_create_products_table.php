@@ -17,11 +17,11 @@ class CreateProductsTable extends Migration
             Schema::create('products', function (Blueprint $table) {
                 $table->bigIncrements('id');
                 //外部キー制約
-                $table->biginteger('company_id')
-                      ->unsigned()
-                      ->foreign('company_id')
-                      ->references('id')
-                      ->on('companies');
+                // $table->biginteger('company_id')
+                //       ->unsigned()
+                //       ->foreign('company_id')
+                //       ->references('id')
+                //       ->on('companies');
                 $table->string('product_name');
                 $table->string('price');
                 $table->string('stock');

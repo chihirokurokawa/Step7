@@ -82,18 +82,26 @@ class MgtController extends Controller
         $inputs = $request->all();
         // 商品情報の登録
         Product::create($inputs);
+
+        // リレーション ここのエラー
+        // $products = \DB::table('products')
+        // ->join('products','companies.id','=','products.company_id')
+        // ->get();
+        
         // $products = \DB::table('products')
         // ->join('companies','products.company_id','=','companies.id')
         // ->get();
-        $products = \DB::table('products')
-        ->join('companies','products.company_id','=','companies.id')
-        ->get();
+
+        $product = new App\Product(['company_name','id' => 'prpducts','company_id']);
+        $company = App\Company::find(1);
+        $company->products()->save($product);
+        
         
         \DB::beginTransaction();
         try {
             //商品情報を登録
             Product::create($inputs);
-            \DB::commit();
+           \DB::commit();
         // } catch(Exception $e) {
         } catch(\Throwable $e) {
             \DB::rollback();
@@ -105,7 +113,7 @@ class MgtController extends Controller
         \Session::flash('err_msg', '商品を登録しました');
 
         
-        return redirect(route('product'));
+        return redirect(route('mgts'));
     
     }
 }
