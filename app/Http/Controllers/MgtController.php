@@ -115,5 +115,7 @@ class MgtController extends Controller
         
         return redirect(route('mgts'));
     
+        // コミットテスト
+        
     }
 }
