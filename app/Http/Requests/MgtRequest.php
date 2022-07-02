@@ -25,7 +25,7 @@ class MgtRequest extends FormRequest
     {
         return [
             'product_name' => 'required',
-            'company_name' => 'required ',
+            // 'company_name' => 'required ',
             'price' => 'required',
             'stock' => 'required',
             'comment' => 'required',

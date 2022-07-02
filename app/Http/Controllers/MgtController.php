@@ -63,9 +63,13 @@ class MgtController extends Controller
 
     public function showCreate() {
 
-        $companies = config('pull.company_name');
+        $companies = \DB::table('companies')
+        ->select('id','company_name')
+        ->get();
         
-        return view('mgt.form',['companies' => $companies]);
+        
+        
+        return view('mgt.form',['companies' => $companies ]);
     }
 
     
@@ -78,24 +82,19 @@ class MgtController extends Controller
     public function exeStore(MgtRequest $request) 
     {
         // dd($request->all());
-        //商品情報のデータを受け取る
+        // 商品情報のデータを受け取る
+        // dd($request);
         $inputs = $request->all();
-        // 商品情報の登録
-        Product::create($inputs);
+        // dd($inputs);
 
-        // リレーション ここのエラー
-        // $products = \DB::table('products')
-        // ->join('products','companies.id','=','products.company_id')
-        // ->get();
-        
-        // $products = \DB::table('products')
-        // ->join('companies','products.company_id','=','companies.id')
-        // ->get();
+        // //0530
+        // $query = Product::query();
+        // $products = $query->get();
+        // dd($query);
 
-        $product = new App\Product(['company_name','id' => 'prpducts','company_id']);
-        $company = App\Company::find(1);
-        $company->products()->save($product);
-        
+        // $product = new App\Product(['company_name','id' => 'products','company_id']);
+        // $company = App\Company::find(1);
+        // $company->products()->save($product);
         
         \DB::beginTransaction();
         try {
@@ -106,13 +105,8 @@ class MgtController extends Controller
         } catch(\Throwable $e) {
             \DB::rollback();
             abort(500);
-            // echo "例外キャッチ：",$e->getMessage(),"\n";
-            
         }
-
         \Session::flash('err_msg', '商品を登録しました');
-
-        
         return redirect(route('mgts'));
     
         

@@ -5,7 +5,7 @@
 
   <div class="col-md-8 col-md-offset-2">
 
-      <p>商品情報ID：{{ $product->company_id }}</p>
+      <p>商品情報ID：{{ $product->id }}</p>
       <p>商品画像：{{ $product->img_path }}</p>
       <h2>商品名：{{ $product->product_name }}</h2>
       <p>メーカー：{{ $product->company->company_name }}</p>

@@ -26,17 +26,19 @@
             </div>
             
             <div class="form-group">
-            <label for="company_name">
+            <label for="company_id">
                 メーカー名
             </label>
-            <select type="text" class="form-control" name="company_name">
-            @foreach($companies as $key => $value)
-            <option value="{{ $value }}">{{ $value }}</option>
+        
+            <select type="text" class="form-control" name="company_id" id="company_id">
+            @foreach($companies as $company )
+            <option value="{{ $company -> id }}">{{ $company -> company_name }}</option>
             @endforeach
             </select>
-                @if ($errors->has('company_name'))
+
+                @if ($errors->has('company_id'))
                     <div class="text-danger">
-                        {{ $errors->first('company_name') }}
+                        {{ $errors->first('company_id') }}
                     </div>
                 @endif
             </div>
