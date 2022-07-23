@@ -25,4 +25,10 @@ Route::get('/product/{id}', 'MgtController@showDetail')->name('show');
 Route::get('product/list','ProductController@select');
 // 詳細表示のリレーション
 Route::get('product/detail','ProductController@select');
+// 商品編集画面の表示
+Route::get('product/edit/{id}','MgtController@showEdit')->name('edit');
+//　商品編集画面登録
+Route::post('/product/update', 'MgtController@exeUpdate')->name('update');
+// 画像登録
+// Route::post('product/store', 'BackProductController@store')->name('back_product_store');
 

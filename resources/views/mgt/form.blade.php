@@ -112,10 +112,10 @@
                 @endif
             </div>
             <div class="mt-5">
-                <a class="btn btn-secondary" href="{{ route('mgts') }}">
-                    キャンセル
+                <a class="btnbtn-secondary" href="{{ route('mgts') }}">
+                    戻る
                 </a>
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btnbtn-primary">
                     登録
                 </button>
             </div>

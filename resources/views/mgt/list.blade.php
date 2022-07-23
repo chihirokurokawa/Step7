@@ -11,7 +11,7 @@
         @endif
       <table class="table table-striped">
           <tr>
-              <th>id</th>
+              <th>ID</th>
               <th>商品画像</th>
               <th>商品名</th>
               <th>価格</th>
@@ -30,8 +30,8 @@
               <td>{{ $product->stock }}</td>
               <td>{{ $product->company_name }}</td>
 
-              <td><a href="/product/{{ $product->id }}">{{ '詳細表示' }}</a></td>
-            　<td></td>
+              <td><button type="button" class="btnbtn-primary" onclick="location.href='/product/{{ $product->id }}'">詳細表示</button></td>
+            　<td><button type="button" class="btnbtn-primary" onclick="location.href='/product/edit/{{ $product->id }}'">編集</button></td>
           </tr>
           @endforeach
       </table>

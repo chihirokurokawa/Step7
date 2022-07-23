@@ -13,7 +13,8 @@
       <p>在庫数：{{ $product->stock }}</p>
       <p>コメント：{{ $product->comment }}</p>
       
-      <a href="/product/{{ $product->id }}">{{ $product->product_name }}>
+      
+      <a class="btn btn-secondary" onclick="location.href='/product/edit/{{ $product->id }}'">
       編集
       </a>
       <a class="btn btn-secondary" href="{{ route('mgts') }}">
