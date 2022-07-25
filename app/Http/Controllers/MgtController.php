@@ -20,8 +20,13 @@ class MgtController extends Controller
         $products = Product::all();
         
 
+        // $products = \DB::table('products')
+        // ->join('companies','products.company_id','=','companies.id')
+        // ->get();
+
         $products = \DB::table('products')
         ->join('companies','products.company_id','=','companies.id')
+        ->select('products.id','img_path','product_name','price','stock','company_name')
         ->get();
         
         return view('mgt.list', ['products' => $products]);
@@ -81,23 +86,7 @@ class MgtController extends Controller
         // dd($request->all());
         // 商品情報のデータを受け取る
         $inputs = $request->all();
-        // dd($inputs);
-
-        // 画像登録
-        //バリデーションの記載
-        // $this->validate($request, CreateProductRequest::rules());
-        // $img_path = $request->img_path;
-        // if ($productImage) {
-
-        //     //一意のファイル名を自動生成しつつ保存し、かつファイルパス（$productImagePath）を生成
-        //     //ここでstore()メソッドを使っているが、これは画像データをstorageに保存している
-        //     $productImagePath = $img_path->store('public/uploads');
-        // } else {
-        //     $productImagePath = "";
-        // }
-
-    
-
+        
 
 
         \DB::beginTransaction();
@@ -130,6 +119,11 @@ class MgtController extends Controller
         ->select('id','company_name')
         ->get();
 
+        // $products = \DB::table('products')
+        // ->join('companies','products.company_id','=','companies.id')
+        // ->select('products.id','img_path','product_name','price','stock','company_name')
+        // ->get();
+
         if (is_null($product)) {
             \Session::flash('err_msg', 'データがありません。');
             return redirect(route('mgts'));
@@ -138,6 +132,44 @@ class MgtController extends Controller
         return view('mgt.edit',['product' => $product],['companies' => $companies ]);
     }
    
+
+     /**
+     * 商品を更新する
+     * 
+     * @return view
+     */
+
+    public function exeUpdate(MgtRequest $request) 
+    {
+        // dd($request->all());
+        // 商品情報のデータを受け取る
+        $inputs = $request->all();
+        dd($inputs);
+
+        \DB::beginTransaction();
+        try {
+            //商品情報を更新
+            $product = Product::find($inputs['id']);
+            $product ->fill([
+                'product_name' => $inputs['product_name'],
+                'company_id' => $inputs['company_id'],
+                'price' => $inputs['price'],
+                'stock' => $inputs['stock'],
+                'comment' => $inputs['comment'],
+                'img_path' => $inputs['img_path'],
+            ]);
+            $products->save();
+           \DB::commit();
+        } catch(\Throwable $e) {
+            \DB::rollback();
+            abort(500);
+        }
+
+
+        \Session::flash('err_msg', '商品情報を更新しました');
+        return redirect(route('mgts'));
+        
+    }
 
 
 }

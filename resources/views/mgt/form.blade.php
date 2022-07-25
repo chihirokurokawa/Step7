@@ -98,13 +98,20 @@
                 <label for="img_path">
                     商品画像
                 </label>
-                <input
-                    id="img_path"
-                    name="img_path"
-                    class="form-control"
-                    value="{{ old('img_path') }}"
-                    type="text"
-                >
+            <!DOCTYPE html>
+            <html lang="ja">
+                <body>
+                        @csrf
+                    <input 
+                        id="img_path"
+                        name="img_path"
+                        class="form-control"
+                        type="file" 
+                        value="{{ old('img_path') }}"
+                    >
+            
+                </body>
+            </html>
                 @if ($errors->has('img_path'))
                     <div class="text-danger">
                         {{ $errors->first('img_path') }}

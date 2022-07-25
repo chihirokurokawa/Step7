@@ -31,4 +31,5 @@ Route::get('product/edit/{id}','MgtController@showEdit')->name('edit');
 Route::post('/product/update', 'MgtController@exeUpdate')->name('update');
 // 画像登録
 // Route::post('product/store', 'BackProductController@store')->name('back_product_store');
-
+// 画像登録
+Route::resource('/upload', 'UploadController');
