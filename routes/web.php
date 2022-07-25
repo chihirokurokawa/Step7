@@ -29,7 +29,6 @@ Route::get('product/detail','ProductController@select');
 Route::get('product/edit/{id}','MgtController@showEdit')->name('edit');
 //　商品編集画面登録
 Route::post('/product/update', 'MgtController@exeUpdate')->name('update');
+
 // 画像登録
-// Route::post('product/store', 'BackProductController@store')->name('back_product_store');
-// 画像登録
-Route::resource('/upload', 'UploadController');
+// Route::resource('/upload', 'UploadController');
