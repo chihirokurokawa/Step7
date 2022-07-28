@@ -2,9 +2,9 @@
 @section('title', '商品新規登録画面')
 @section('content')
 <div class="row">
-    <div class="col-md-8 col-md-offset-2">
+    <div class="col-md-8 col-md-offset-4">
         <h2>商品新規登録フォーム</h2>
-        <form method="POST" action="{{ route('store') }}" onSubmit="return checkSubmit()">
+        <form method="POST" action="{{ route('store') }}" enctype="multipart/form-data" onSubmit="return checkSubmit()">
             @csrf
             
             <div class="form-group">
@@ -98,20 +98,13 @@
                 <label for="img_path">
                     商品画像
                 </label>
-            <!DOCTYPE html>
-            <html lang="ja">
-                <body>
-                        @csrf
-                    <input 
-                        id="img_path"
-                        name="img_path"
-                        class="form-control"
-                        type="file" 
-                        value="{{ old('img_path') }}"
-                    >
-            
-                </body>
-            </html>
+                <input 
+                id="img_path"
+                type="file"
+                class="form-control-file"
+                name="img_path"
+                value="{{ old('img_path') }}"
+                >
                 @if ($errors->has('img_path'))
                     <div class="text-danger">
                         {{ $errors->first('img_path') }}
@@ -119,12 +112,13 @@
                 @endif
             </div>
             <div class="mt-5">
-                <a class="btnbtn-secondary" href="{{ route('mgts') }}">
-                    戻る
-                </a>
-                <button type="submit" class="btnbtn-primary">
+                
+                <button type="submit" class="btn btn-primary">
                     登録
                 </button>
+                <a class="btn btn-secondary" href="{{ route('mgts') }}">
+                    戻る
+                </a>
             </div>
         </form>
     </div>
