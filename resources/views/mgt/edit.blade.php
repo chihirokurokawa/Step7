@@ -33,7 +33,9 @@
         
             <select type="text" class="form-control" name="company_id" id="company_id">
             @foreach($companies as $company )
-            <option value="{{ $product->company_id }}">{{ $company -> company_name }}</option>
+            <!-- <option value="{{ $company->id }}">{{ $company -> company_name }}</option> -->
+            <option value="{{ $company->id }}">{{ $product -> company -> company_name }}</option>
+
             @endforeach
             </select>
                 @if ($errors->has('company_id'))
@@ -103,7 +105,7 @@
                 type="file"
                 class="form-control-file"
                 name="img_path"
-                value="{{ old('img_path') }}"
+                value="{{ $product->img_path }}"
                 >
                 @if ($errors->has('img_path'))
                     <div class="text-danger">
