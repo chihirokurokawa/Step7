@@ -2,7 +2,7 @@
 @section('title', '商品編集')
 @section('content')
 <div class="row">
-    <div class="col-md-8 col-md-offset-2">
+    <div class="col-md-8 col-md-offset-4">
         <h2>商品編集フォーム</h2>
         <form method="POST" action="{{ route('update') }}" enctype="multipart/form-data" onSubmit="return checkSubmit()">
             @csrf
@@ -32,10 +32,8 @@
             </label>
         
             <select type="text" class="form-control" name="company_id" id="company_id">
-            @foreach($companies as $company )
-            <!-- <option value="{{ $company->id }}">{{ $company -> company_name }}</option> -->
-            <option value="{{ $company->id }}">{{ $product -> company -> company_name }}</option>
-
+            @foreach($companies as $company)
+            <option value="{{ $company->id }}"> {{ $company->company_name }}</option>
             @endforeach
             </select>
                 @if ($errors->has('company_id'))
@@ -96,6 +94,7 @@
                     </div>
                 @endif
             </div>
+
             <div class="form-group">
                 <label for="img_path">
                     商品画像
@@ -107,6 +106,9 @@
                 name="img_path"
                 value="{{ $product->img_path }}"
                 >
+                設定中：<img src="{{ asset ('/storage/images/' . $product->img_path ) }}">
+                
+                
                 @if ($errors->has('img_path'))
                     <div class="text-danger">
                         {{ $errors->first('img_path') }}

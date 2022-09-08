@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Company;
 use App\Http\Requests\MgtRequest;
 
 class MgtController extends Controller
@@ -128,19 +129,29 @@ class MgtController extends Controller
      */
     public function showEdit($id)
     {
-
-        // 編集画面でメーカー名表示できない　登録しても反映されない　画像は、編集画面で表示されない
         $product = Product::with('company:id,company_name')->find($id);
     
         $companies = \DB::table('companies')
         ->select('id','company_name')
         ->get();
 
+        // $companies = Product::with('Company')->where('id', $id)->first();
+
+        // $products = \DB::table('products')
+        // ->join('companies','products.company_id','=','companies.id')
+        // ->select('products.id','img_path','product_name','price','stock','company_name')
+        // ->get();
+
         $products = \DB::table('products')
-        ->join('companies','products.company_id','=','companies.id')
-        ->select('products.id','img_path','product_name','price','stock','company_name')
+        ->join('companies','companies.id','=','products.company_id')
         ->get();
 
+        // dd($product);
+        // if (isset($data['icon_image_path'])) {
+        //     $icon_image_path = $data['icon_image_path']->store('img', 'public');
+        // } else {
+        //     $icon_image_path = "img/profile.jpg"; // nullからimg/profile.jpgに変更
+        // }
 
 
         if (is_null($product)) {
@@ -170,13 +181,35 @@ class MgtController extends Controller
             //商品情報を更新
             $product = Product::find($inputs['id']);
 
-            if(request('img_path')){
+            if(!is_null($name)){
                 $original = request()->file('img_path')->getClientOriginalName();
                 $name = date('Ymd_His').'_'.$original;
                 $file = request()->file('img_path')->move('storage/images',$name);
                 // $inputs -> img_path = $name;
+
+                // 画像の拡張子を取得
+                $original = $request->file('img_path')->getClientOriginalName();
+                // 画像の名前を取得
+                $name = date('Ymd_His').'_'.$original;
+                $file = request()->file('img_path')->move('storage/images',$name);
+                // // 画像をリサイズ変更したところ
+                // $width = 500;
+                // $resize_img = Image::make($file)->resize($width, null, function($constraint){
+                // $constraint->aspectRatio();
+                // });
+                $product -> img_path = $file;
+                $product -> save();
+            
             }
 
+            // if ($request->hasFile('img_path') && $request->file('img_path')->getClientOriginalName()){
+            //     $name = date('Ymd_His').'_'.$original;
+            //     $file = request()->file('img_path')->move('storage/images',$name);
+            //     $file -> img_path = $name;
+            // }
+            //     $name -> save();
+            
+            
             $product ->fill([
                 'product_name' => $inputs['product_name'],
                 'company_id' => $inputs['company_id'],
