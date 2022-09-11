@@ -129,7 +129,8 @@ class MgtController extends Controller
      */
     public function showEdit($id)
     {
-        $product = Product::with('company:id,company_name')->find($id);
+        // $product = Product::with('company:id,company_name')->find($id);
+        $product = Product::find($id);
     
         $companies = \DB::table('companies')
         ->select('id','company_name')
