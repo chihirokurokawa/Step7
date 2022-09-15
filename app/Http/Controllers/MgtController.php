@@ -129,8 +129,8 @@ class MgtController extends Controller
      */
     public function showEdit($id)
     {
-        // $product = Product::with('company:id,company_name')->find($id);
-        $product = Product::find($id);
+        $product = Product::with('company:id,company_name')->find($id);
+        // $product = Product::find($id);
     
         $companies = \DB::table('companies')
         ->select('id','company_name')
@@ -138,14 +138,14 @@ class MgtController extends Controller
 
         // $companies = Product::with('Company')->where('id', $id)->first();
 
-        // $products = \DB::table('products')
-        // ->join('companies','products.company_id','=','companies.id')
-        // ->select('products.id','img_path','product_name','price','stock','company_name')
-        // ->get();
-
         $products = \DB::table('products')
         ->join('companies','companies.id','=','products.company_id')
+        ->select('products.id','img_path','product_name','price','stock','company_name','comment')
         ->get();
+
+        // $products = \DB::table('products')
+        // ->join('companies','companies.id','=','products.company_id')
+        // ->get();
 
         // dd($product);
         // if (isset($data['icon_image_path'])) {
@@ -160,7 +160,7 @@ class MgtController extends Controller
             return redirect(route('mgts'));
         }
 
-        return view('mgt.edit',['product' => $product],['companies' => $companies ]);
+        return view('mgt.edit',['product' => $product],['products' => $products ],['companies' => $companies ]);
     }
    
 

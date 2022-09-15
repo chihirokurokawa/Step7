@@ -31,11 +31,32 @@
                 メーカー名
             </label>
         
-            <select type="text" class="form-control" name="company_id" id="company_id">
-            @foreach($companies as $company)
-            <option value="{{ $company->id }}"> {{ $company->company_name }}</option>
-            @endforeach
-            </select>
+            
+
+
+            <select class="form-control{{ $errors->has('company_id') ? ' is-invalid' : '' }}" name="company_id" id="company_id">
+        <option></option>
+        @foreach ($products as $product)
+            @if (!is_null(old('company_id')))
+                <!-- バリデーションエラー等による再表示時 -->
+                @if ($product->company_id == old('company_id'))
+                    <option value="{{ $product->company_id }}" selected>{{ $product->company_name }}</option>
+                @else
+                    <option value="{{ $product->company_id }}">{{ $product->company_name }}</option>
+                @endif
+            @else
+                <!-- 初期表示時 -->
+                @if ($product->company_id == $company->id)
+                    <option value="{{ $product->company_id }}" selected>{{ $product->company_name }}</option>
+                @else
+                    <option value="{{ $product->company_id }}">{{ $product->company_name }}</option>
+                @endif
+            @endif
+        @endforeach
+    </select>
+
+  
+
                 @if ($errors->has('company_id'))
                     <div class="text-danger">
                         {{ $errors->first('company_id') }}
@@ -87,7 +108,7 @@
                     name="comment"
                     class="form-control"
                     rows="4"
-                >"{{ $product->comment }}"</textarea>
+                >{{ $product->comment }}</textarea>
                 @if ($errors->has('comment'))
                     <div class="text-danger">
                         {{ $errors->first('comment') }}
