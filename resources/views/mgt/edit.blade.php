@@ -30,29 +30,13 @@
             <label for="company_id">
                 メーカー名
             </label>
+
+            <select  name="company_id" id="company_id">
         
-            
-
-
-            <select class="form-control{{ $errors->has('company_id') ? ' is-invalid' : '' }}" name="company_id" id="company_id">
-        <option></option>
-        @foreach ($products as $product)
-            @if (!is_null(old('company_id')))
-                <!-- バリデーションエラー等による再表示時 -->
-                @if ($product->company_id == old('company_id'))
-                    <option value="{{ $product->company_id }}" selected>{{ $product->company_name }}</option>
-                @else
-                    <option value="{{ $product->company_id }}">{{ $product->company_name }}</option>
-                @endif
-            @else
-                <!-- 初期表示時 -->
-                @if ($product->company_id == $company->id)
-                    <option value="{{ $product->company_id }}" selected>{{ $product->company_name }}</option>
-                @else
-                    <option value="{{ $product->company_id }}">{{ $product->company_name }}</option>
-                @endif
-            @endif
+        @foreach($companies as $company)
+        <option value="{{ $company->id }}" @if(old('company_id', $product->company_id) === $company->id) selected @endif>{{ $company->company_name }}</option>
         @endforeach
+
     </select>
 
   

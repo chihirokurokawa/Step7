@@ -138,16 +138,17 @@ class MgtController extends Controller
 
         // $companies = Product::with('Company')->where('id', $id)->first();
 
-        $products = \DB::table('products')
-        ->join('companies','companies.id','=','products.company_id')
-        ->select('products.id','img_path','product_name','price','stock','company_name','comment')
-        ->get();
+        // $products = \DB::table('products')
+        // ->join('companies','companies.id','=','products.company_id')
+        // ->select('products.id','img_path','product_name','price','stock','company_name','comment')
+        // ->get();
 
         // $products = \DB::table('products')
         // ->join('companies','companies.id','=','products.company_id')
         // ->get();
 
         // dd($product);
+        // dd($companies);
         // if (isset($data['icon_image_path'])) {
         //     $icon_image_path = $data['icon_image_path']->store('img', 'public');
         // } else {
@@ -160,7 +161,8 @@ class MgtController extends Controller
             return redirect(route('mgts'));
         }
 
-        return view('mgt.edit',['product' => $product],['products' => $products ],['companies' => $companies ]);
+        return view('mgt.edit')->with('product',$product)->with('companies',$companies);
+        // return view('mgt.edit',['product' => $product],['products' => $products ],['companies' => $companies ]);
     }
    
 
@@ -181,27 +183,27 @@ class MgtController extends Controller
         try {
             //商品情報を更新
             $product = Product::find($inputs['id']);
+            $img_path = $request->img_path;
 
-            if(!is_null($name)){
-                $original = request()->file('img_path')->getClientOriginalName();
-                $name = date('Ymd_His').'_'.$original;
-                $file = request()->file('img_path')->move('storage/images',$name);
-                // $inputs -> img_path = $name;
-
-                // 画像の拡張子を取得
-                $original = $request->file('img_path')->getClientOriginalName();
-                // 画像の名前を取得
-                $name = date('Ymd_His').'_'.$original;
-                $file = request()->file('img_path')->move('storage/images',$name);
-                // // 画像をリサイズ変更したところ
-                // $width = 500;
-                // $resize_img = Image::make($file)->resize($width, null, function($constraint){
-                // $constraint->aspectRatio();
-                // });
-                $product -> img_path = $file;
-                $product -> save();
-            
-            }
+//             if(!is_null($name)){
+//                 $original = request()->file('img_path')->getClientOriginalName();
+//                 $name = date('Ymd_His').'_'.$original;
+//                 $file = request()->file('img_path')->move('storage/images',$name);
+//                 // $inputs -> img_path = $name;
+// 
+//                 // 画像の拡張子を取得
+//                 $original = $request->file('img_path')->getClientOriginalName();
+//                 // 画像の名前を取得
+//                 $name = date('Ymd_His').'_'.$original;
+//                 $file = request()->file('img_path')->move('storage/images',$name);
+//                 // // 画像をリサイズ変更したところ
+//                 // $width = 500;
+//                 // $resize_img = Image::make($file)->resize($width, null, function($constraint){
+//                 // $constraint->aspectRatio();
+//                 // });
+//                 $product -> img_path = $file;
+//                 $product -> save();
+//             }
 
             // if ($request->hasFile('img_path') && $request->file('img_path')->getClientOriginalName()){
             //     $name = date('Ymd_His').'_'.$original;
@@ -209,6 +211,14 @@ class MgtController extends Controller
             //     $file -> img_path = $name;
             // }
             //     $name -> save();
+
+                if(!is_null($request['img_path'])){
+                    $original = request()->file('img_path')->getClientOriginalName();
+                    $name = date('Ymd_His').'_'.$original;
+                    $file = request()->file('img_path')->move('storage/images',$name);
+                    // $inputs -> img_path = $name;
+                    $product -> img_path = $name;
+                }
             
             
             $product ->fill([
@@ -217,13 +227,18 @@ class MgtController extends Controller
                 'price' => $inputs['price'],
                 'stock' => $inputs['stock'],
                 'comment' => $inputs['comment'],
-                'img_path' => $name,
+                // 'img_path' => $name,
+                
             ]);
             $product->save();
+
            \DB::commit();
         } catch(\Throwable $e) {
             \DB::rollback();
-            abort(500);
+            \Log::error($e);
+
+            // フロントにエラーを通知
+            throw $e;
         }
 
 
