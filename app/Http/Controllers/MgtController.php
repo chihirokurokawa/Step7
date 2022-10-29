@@ -14,29 +14,82 @@ class MgtController extends Controller
      * 
      * @return view
      */
-    public function showList()
-    {
-       
-        
-        $products = Product::all();
-        
+    public function showList(Request $request)
+    //  public function showList()
+    {    
+        $product_name = $request->input('product_name');
+        $company_name = $request->input('company_name');
 
-        // $products = \DB::table('products')
-        // ->join('companies','products.company_id','=','companies.id')
-        // ->get();
+        $query = Product::query();
+
+        if(!empty($product_name)) {
+            $query->where('product_name', 'LIKE', "%{$product_name}%");
+        }
+        if(!empty($company_name)) {
+            $query->where('company_name', 'LIKE', $company_name);
+        }
+        
+        $products = $query->get();
+
+        $companies_list = Company::all();
+
+        $products = Product::all();
 
         $products = \DB::table('products')
         ->join('companies','products.company_id','=','companies.id')
         ->select('products.id','img_path','product_name','price','stock','company_name')
         ->get();
+
+        $companies = \DB::table('companies')
+        ->select('id','company_name')
+        ->get();
         
-        return view('mgt.list', ['products' => $products]);
-        
-        //$companies = Company::where('company_id', Company::id())
-        // $products = Product::with('company')->where('id, $id')->first();
-        // return view ('mgt.list')->with('product','$product');
+        // return view('mgt.list', ['products' => $products],['companies' => $companies]);
+        return view('mgt.list', ['products' => $products],['companies' => $companies], ['product_name' => $product_name], ['companies_list' => $companies_list]);
 
     }
+
+//     /**
+//      * 商品検索結果を表示する
+//      * 
+//      * @return view
+//      */
+//     public function post()
+//     {
+       
+// //         // ユーザー一覧をページネートで取得
+// //         $products = Product::paginate(20);
+
+// // // 　　     // 検索フォームで入力された値を取得する
+// // //         $search = $request->input('search');
+
+// //         // クエリビルダ
+// //         $query = Product::query();
+
+//     //         // もし検索フォームにキーワードが入力されたら
+//     //         if ($search) {
+    
+//     //             // 全角スペースを半角に変換
+//     //             $spaceConversion = mb_convert_kana($search, 's');
+//     //             // 単語を半角スペースで区切り、配列にする（例："山田 翔" → ["山田", "翔"]）
+//     //             $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
+//     //             // 単語をループで回し、ユーザーネームと部分一致するものがあれば、$queryとして保持される
+//     //             foreach($wordArraySearched as $value) {
+//     //                 $query->where('product_name', 'like', '%'.$value.'%');
+//     //             }
+//     // 　　　　      // 上記で取得した$queryをページネートにし、変数$usersに代入
+//     //             $products = $query->paginate(20);
+//     //         }
+
+        
+
+//         $products = \DB::table('products')
+//         ->join('companies','products.company_id','=','companies.id')
+//         ->select('products.id','img_path','product_name','price','stock','company_name')
+//         ->get();
+        
+//         return view('mgt.list', ['products' => $products]);
+//     }
 
 
     /**

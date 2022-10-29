@@ -3,6 +3,22 @@
 @section('content')
 <div class="row">
   <div class="col-md-11 col-md-offset-1">
+
+  <title>検索と一覧</title>
+
+     //* 検索機能ここから *//
+    <body>
+    <h2>商品検索</h2>
+    <form  method="GET" action="/post"> //postへ商品の名前を飛ばしてます 
+      <input type="text" name="product_name">
+      <input type="submit" value="検索">
+    </form>
+      
+    //* 検索機能ここまで *//
+
+
+
+
       <h2>商品情報一覧</h2>
         @if (session('err_msg'))
             <p class="text-danger">
