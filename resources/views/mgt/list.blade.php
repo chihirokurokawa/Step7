@@ -5,14 +5,42 @@
   <div class="col-md-11 col-md-offset-1">
 
   <title>検索と一覧</title>
-
      //* 検索機能ここから *//
-    <body>
-    <h2>商品検索</h2>
-    <form  method="GET" action="/post"> //postへ商品の名前を飛ばしてます 
-      <input type="text" name="product_name">
-      <input type="submit" value="検索">
+     <h2>商品検索</h2>
+    <div class="search">
+    <form action="{{ route('mgts') }}" method="GET">
+            @csrf
+
+    <div class="form-group">
+        <div>
+            <label for="">商品名
+              <div>
+                <input type="text" name="product_name" value="{{ $product_name }}">
+              </div>
+            </label>
+        </div>
+        <div>
+            <label for="">会社名
+              <div>
+                <select name="company_name" data-toggle="select">
+                    <option value="">全て</option>
+                    @foreach ($companies as $company)
+                    <option value="{{ $company -> id }}">{{ $company -> company -> company_name }}</option>
+                    @endforeach
+                </select>
+              </div>
+            </label>
+        </div>
+        <div>
+            <input type="submit" class="btn" value="検索">
+        </div>
+      </div>
     </form>
+  </div>
+
+    
+    
+
       
     //* 検索機能ここまで *//
 

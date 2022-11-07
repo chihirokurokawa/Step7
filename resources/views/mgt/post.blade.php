@@ -28,7 +28,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>書籍検索</title>
+    <title>検索</title>
 
 <body>
 <h2>検索結果</h2>
