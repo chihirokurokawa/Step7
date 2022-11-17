@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Company;
 use App\Http\Requests\MgtRequest;
 
+
 class MgtController extends Controller
 {
     /**
@@ -17,24 +18,7 @@ class MgtController extends Controller
     public function showList(Request $request)
     //  public function showList()
     {    
-        $product_name = $request->input('product_name');
-        $company_name = $request->input('company_name');
-
-        $query = Product::query();
-
-        if(!empty($product_name)) {
-            $query->where('product_name', 'LIKE', "%{$product_name}%");
-        }
-        if(!empty($company_name)) {
-            $query->where('company_name', 'LIKE', $company_name);
-        }
-        
-        $products = $query->get();
-
-        $companies_list = Company::all();
-
-        $products = Product::all();
-
+    
         $products = \DB::table('products')
         ->join('companies','products.company_id','=','companies.id')
         ->select('products.id','img_path','product_name','price','stock','company_name')
@@ -43,9 +27,30 @@ class MgtController extends Controller
         $companies = \DB::table('companies')
         ->select('id','company_name')
         ->get();
+
+        $keyword = $request->input('keyword');
+        $company_name = $request->input('company_name');
+
+        $query = Product::query();
+
+        if(!empty($keyword)) {
+            $query->where('product_name', 'LIKE', "%{$keyword}%");
+        }
+        if(!empty($company_name)) {
+            $query->where('company_name', 'LIKE', $company_name);
+        }
+        
+        // dd($keyword);
+
+        // $products = $query->get();
+
+        // $companies_list = Company::all();
+
+        // $products = Product::all();
+
         
         // return view('mgt.list', ['products' => $products],['companies' => $companies]);
-        return view('mgt.list', ['products' => $products],['companies' => $companies], ['product_name' => $product_name], ['companies_list' => $companies_list]);
+        return view('mgt.list', ['products' => $products],['companies' => $companies],['keyword' => $keyword]);
 
     }
 

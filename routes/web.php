@@ -11,7 +11,6 @@
 |
 */
 
-
 //一覧を表示
 Route::get('/', 'MgtController@showList')->name('mgts');
 //登録画面の表示
@@ -34,5 +33,5 @@ Route::post('/product/delate/{id}', 'MgtController@exeDelete')->name('delate');
 Auth::routes();
 //　商品検索画面
 // Route::get('/', 'MgtController@showList')->name('mgt.post');
-// // 　商品検索画面
-// Route::get('product/receive', 'MgtController@receive')->name('receive');
+// 　商品検索画面
+// Route::get('product/post', 'MgtController@post')->name('post');

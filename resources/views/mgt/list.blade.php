@@ -5,7 +5,7 @@
   <div class="col-md-11 col-md-offset-1">
 
   <title>検索と一覧</title>
-     //* 検索機能ここから *//
+    
      <h2>商品検索</h2>
     <div class="search">
     <form action="{{ route('mgts') }}" method="GET">
@@ -15,7 +15,9 @@
         <div>
             <label for="">商品名
               <div>
-                <input type="text" name="product_name" value="{{ $product_name }}">
+              
+                <input type="text" name="keyword" value="{{ $keyword }}">
+               
               </div>
             </label>
         </div>
@@ -25,7 +27,7 @@
                 <select name="company_name" data-toggle="select">
                     <option value="">全て</option>
                     @foreach ($companies as $company)
-                    <option value="{{ $company -> id }}">{{ $company -> company -> company_name }}</option>
+                    <option value="{{ $company -> id }}">{{ $company -> company_name }}</option>
                     @endforeach
                 </select>
               </div>
@@ -37,12 +39,6 @@
       </div>
     </form>
   </div>
-
-    
-    
-
-      
-    //* 検索機能ここまで *//
 
 
 
