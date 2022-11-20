@@ -18,7 +18,10 @@ class MgtController extends Controller
     public function showList(Request $request)
     //  public function showList()
     {    
-    
+        
+        $keyword = $request->input('keyword');
+        $company_name = $request->input('company_name');
+
         $products = \DB::table('products')
         ->join('companies','products.company_id','=','companies.id')
         ->select('products.id','img_path','product_name','price','stock','company_name')
@@ -28,8 +31,6 @@ class MgtController extends Controller
         ->select('id','company_name')
         ->get();
 
-        $keyword = $request->input('keyword');
-        $company_name = $request->input('company_name');
 
         $query = Product::query();
 
@@ -42,59 +43,17 @@ class MgtController extends Controller
         
         // dd($keyword);
 
-        // $products = $query->get();
+        $products = $query->get();
 
         // $companies_list = Company::all();
 
-        // $products = Product::all();
+        $products = Product::all();
 
         
         // return view('mgt.list', ['products' => $products],['companies' => $companies]);
-        return view('mgt.list', ['products' => $products],['companies' => $companies],['keyword' => $keyword]);
+        return view('mgt.list', ['keyword' => $keyword],['products' => $products],['companies' => $companies]);
 
     }
-
-//     /**
-//      * 商品検索結果を表示する
-//      * 
-//      * @return view
-//      */
-//     public function post()
-//     {
-       
-// //         // ユーザー一覧をページネートで取得
-// //         $products = Product::paginate(20);
-
-// // // 　　     // 検索フォームで入力された値を取得する
-// // //         $search = $request->input('search');
-
-// //         // クエリビルダ
-// //         $query = Product::query();
-
-//     //         // もし検索フォームにキーワードが入力されたら
-//     //         if ($search) {
-    
-//     //             // 全角スペースを半角に変換
-//     //             $spaceConversion = mb_convert_kana($search, 's');
-//     //             // 単語を半角スペースで区切り、配列にする（例："山田 翔" → ["山田", "翔"]）
-//     //             $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
-//     //             // 単語をループで回し、ユーザーネームと部分一致するものがあれば、$queryとして保持される
-//     //             foreach($wordArraySearched as $value) {
-//     //                 $query->where('product_name', 'like', '%'.$value.'%');
-//     //             }
-//     // 　　　　      // 上記で取得した$queryをページネートにし、変数$usersに代入
-//     //             $products = $query->paginate(20);
-//     //         }
-
-        
-
-//         $products = \DB::table('products')
-//         ->join('companies','products.company_id','=','companies.id')
-//         ->select('products.id','img_path','product_name','price','stock','company_name')
-//         ->get();
-        
-//         return view('mgt.list', ['products' => $products]);
-//     }
 
 
     /**
