@@ -44,10 +44,10 @@ class MgtController extends Controller
         $product_keyword = $request->input('product_keyword');
         $company_keyword = $request->input('company_keyword');
 
-        $products = \DB::table('products')
-        ->join('companies','products.company_id','=','companies.id')
-        ->select('products.id','img_path','product_name','price','stock','company_name')
-        ->get();
+        // $products = \DB::table('products')
+        // ->join('companies','products.company_id','=','companies.id')
+        // ->select('products.id','img_path','product_name','price','stock','company_name')
+        // ->get();
 
         $query = Product::query();
 
@@ -58,8 +58,6 @@ class MgtController extends Controller
             $query->where('company_name', 'LIKE', $company_keyword);
         }
         
-        // dd($keyword);
-
         // $products_list = $query->get();
 
         // $companies_list = Company::all();
@@ -69,6 +67,8 @@ class MgtController extends Controller
         $companies = \DB::table('companies')
         ->select('id','company_name')
         ->get();
+
+        // dd($companies);
 
         return view('mgt.list', compact($products, $companies));
 
