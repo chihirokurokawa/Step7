@@ -16,7 +16,7 @@
             <label for="">商品名
               <div>
               
-                <input type="text" name="keyword" value="{{ $keyword }}">
+                <input type="text" name="product_keyword">
                
               </div>
             </label>
@@ -24,7 +24,7 @@
         <div>
             <label for="">会社名
               <div>
-                <select name="company_name" data-toggle="select">
+                <select name="company_keyword" data-toggle="select">
                     <option value="">全て</option>
                     @foreach ($companies as $company)
                     <option value="{{ $company -> id }}">{{ $company -> company_name }}</option>
@@ -39,8 +39,6 @@
       </div>
     </form>
   </div>
-
-
 
 
       <h2>商品情報一覧</h2>

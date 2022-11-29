@@ -15,13 +15,9 @@ class MgtController extends Controller
      * 
      * @return view
      */
-    public function showList(Request $request)
-    //  public function showList()
-    {    
-        
-        $keyword = $request->input('keyword');
-        $company_name = $request->input('company_name');
-
+    public function showList()
+    {          
+    
         $products = \DB::table('products')
         ->join('companies','products.company_id','=','companies.id')
         ->select('products.id','img_path','product_name','price','stock','company_name')
@@ -30,30 +26,54 @@ class MgtController extends Controller
         $companies = \DB::table('companies')
         ->select('id','company_name')
         ->get();
+        
 
+        
+        return view('mgt.list', ['products' => $products],['companies' => $companies]);
+
+    }
+
+    /**
+     * 検索結果の表示
+     * 
+     * @return view
+     */
+    public function keyword(Request $request)
+    {    
+        
+        $product_keyword = $request->input('product_keyword');
+        $company_keyword = $request->input('company_keyword');
+
+        $products = \DB::table('products')
+        ->join('companies','products.company_id','=','companies.id')
+        ->select('products.id','img_path','product_name','price','stock','company_name')
+        ->get();
 
         $query = Product::query();
 
-        if(!empty($keyword)) {
-            $query->where('product_name', 'LIKE', "%{$keyword}%");
+        if(!empty($product_keyword)) {
+            $query->where('product_name', 'LIKE', "%{$product_keyword}%");
         }
-        if(!empty($company_name)) {
-            $query->where('company_name', 'LIKE', $company_name);
+        if(!empty($company_keyword)) {
+            $query->where('company_name', 'LIKE', $company_keyword);
         }
         
         // dd($keyword);
 
-        $products = $query->get();
+        // $products_list = $query->get();
 
         // $companies_list = Company::all();
 
-        $products = Product::all();
+        $products = $query->get();
 
-        
-        // return view('mgt.list', ['products' => $products],['companies' => $companies]);
-        return view('mgt.list', ['keyword' => $keyword],['products' => $products],['companies' => $companies]);
+        $companies = \DB::table('companies')
+        ->select('id','company_name')
+        ->get();
+
+        return view('mgt.list', compact($products, $companies));
 
     }
+
 
 
     /**
