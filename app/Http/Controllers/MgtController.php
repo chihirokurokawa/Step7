@@ -70,7 +70,7 @@ class MgtController extends Controller
 
         // dd($companies);
 
-        return view('mgt.list', compact($products, $companies));
+        return view('mgt.post', compact($products, $companies));
 
     }
 
