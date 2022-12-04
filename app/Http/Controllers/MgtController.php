@@ -16,8 +16,7 @@ class MgtController extends Controller
      * @return view
      */
     public function showList()
-    {          
-    
+    {
         $products = \DB::table('products')
         ->join('companies','products.company_id','=','companies.id')
         ->select('products.id','img_path','product_name','price','stock','company_name')
@@ -27,6 +26,7 @@ class MgtController extends Controller
         ->select('id','company_name')
         ->get();
         
+        // dd($products);
 
         
         return view('mgt.list', ['products' => $products],['companies' => $companies]);
@@ -68,9 +68,9 @@ class MgtController extends Controller
         ->select('id','company_name')
         ->get();
 
-        // dd($companies);
+        // dd($products);
 
-        return view('mgt.post', compact($products, $companies));
+        return view('mgt.list', compact($products, $companies));
 
     }
 
@@ -91,8 +91,6 @@ class MgtController extends Controller
             \Session::flash('err_msg', 'データがありません。');
             return redirect(route('mgts'));
         }
-
-        // dd($product);
         
         return view('mgt.detail', ['product' => $product]);
     }
