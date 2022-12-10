@@ -7,7 +7,6 @@
     <div class="navbar-nav">
       <a class="nav-item nav-link active" href="{{ route('mgts') }}">商品情報一覧 <span class="sr-only"></span></a>
       <a class="nav-item nav-link" href="{{ route('create') }}">商品新規投稿</a>
-      <a class="nav-item nav-link" href="{{ route('login') }}">ログアウト</a>
     </div>
   </div>
 </nav>

@@ -44,18 +44,22 @@ class MgtController extends Controller
         $product_keyword = $request->input('product_keyword');
         $company_keyword = $request->input('company_keyword');
 
+        // dd($product_keyword);
+
         // $products = \DB::table('products')
         // ->join('companies','products.company_id','=','companies.id')
         // ->select('products.id','img_path','product_name','price','stock','company_name')
         // ->get();
 
-        $query = Product::query();
+        $query =\DB::table('products')
+        ->join('companies','products.company_id','=','companies.id')
+        ->select('products.id','img_path','product_name','price','stock','company_name');
 
         if(!empty($product_keyword)) {
             $query->where('product_name', 'LIKE', "%{$product_keyword}%");
         }
         if(!empty($company_keyword)) {
-            $query->where('company_name', 'LIKE', $company_keyword);
+            $query->where('company_id', '=', "$company_keyword");
         }
         
         // $products_list = $query->get();
@@ -68,9 +72,10 @@ class MgtController extends Controller
         ->select('id','company_name')
         ->get();
 
-        // dd($products);
+       
+        //  dd($company_keyword);
 
-        return view('mgt.list', compact($products, $companies));
+        return view('mgt.list', ['products' => $products],['companies' => $companies]);
 
     }
 

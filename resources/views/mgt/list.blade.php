@@ -8,7 +8,7 @@
     
      <h2>商品検索</h2>
     <div class="search">
-    <form action="{{ route('search') }}" method="GET">
+    <form action="{{ route('search') }}" method="POST">
             @csrf
 
     <div class="form-group">

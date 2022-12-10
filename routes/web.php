@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::group(['middleware' => 'auth'], function () {
 //一覧を表示
 Route::get('/', 'MgtController@showList')->name('mgts');
 //登録画面の表示
@@ -32,9 +32,11 @@ Route::post('/product/update', 'MgtController@exeUpdate')->name('update');
 Route::post('/product/delate/{id}', 'MgtController@exeDelete')->name('delate');
 Auth::routes();
 //　商品結果画面
-Route::post('/', 'MgtController@keyword')->name('search');
+Route::post('/product/keyword', 'MgtController@keyword')->name('search');
+Route::get('/product/keyword', 'MgtController@keyword')->name('search');
 // 　商品検索画面
 // Route::get('product/post', 'MgtController@post')->name('post');
+});
 
 Auth::routes();
 
