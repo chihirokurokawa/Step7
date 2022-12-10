@@ -32,6 +32,10 @@ Route::post('/product/update', 'MgtController@exeUpdate')->name('update');
 Route::post('/product/delate/{id}', 'MgtController@exeDelete')->name('delate');
 Auth::routes();
 //　商品結果画面
-Route::post('/', 'MgtController@keyword')->name('mgts');
+Route::post('/', 'MgtController@keyword')->name('search');
 // 　商品検索画面
 // Route::get('product/post', 'MgtController@post')->name('post');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
