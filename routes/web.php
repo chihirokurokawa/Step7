@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+//ログイン前にアクセス不可
 Route::group(['middleware' => 'auth'], function () {
 //一覧を表示
 Route::get('/', 'MgtController@showList')->name('mgts');

@@ -18,10 +18,15 @@ class Company extends Model
         'representative_name'
     ];
     
-    
-    public function products()
+    public function getProducts()
     {
         return $this->hasMany('App\Models\Product');
     }
-    
+
+    public static function getCompanies()
+    {
+        $companies = Company::select('id', 'company_name')->get();
+        return $companies;
+    }
+
 }
