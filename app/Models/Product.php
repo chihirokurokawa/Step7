@@ -72,4 +72,42 @@ class Product extends Model
         return self::with('company:id,company_name')->find($id);
     }
 
+    public static function createProduct($data)
+    {
+        if(request('img_path')){
+            $original = request()->file('img_path')->getClientOriginalName();
+            $name = date('Ymd_His').'_'.$original;
+            $file = request()->file('img_path')->move('storage/images',$name);
+        }
+        Product::create([
+            'company_id'=> $data['company_id'],
+            'product_name'=> $data['product_name'],
+            'price'=> $data['price'],
+            'stock'=> $data['stock'],
+            'comment'=> $data['comment'],
+            'img_path' => $name
+        ]);
+    }
+
+    public static function updateProduct($request) 
+    {
+        $product = Product::find($request['id']);
+        $img_path = $request->img_path;
+    
+        if(!is_null($request['img_path'])){
+            $original = request()->file('img_path')->getClientOriginalName();
+            $name = date('Ymd_His').'_'.$original;
+            $file = request()->file('img_path')->move('storage/images',$name);
+            $product -> img_path = $name;
+        }
+        $product ->fill([
+            'product_name' => $request['product_name'],
+            'company_id' => $request['company_id'],
+            'price' => $request['price'],
+            'stock' => $request['stock'],
+            'comment' => $request['comment'],
+        ]);
+        $product->save();
+    }
+
 }

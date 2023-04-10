@@ -81,7 +81,7 @@
               action="{{ route('delate', $product->id) }}" 
               onSubmit="return checkDelete()">
               @csrf
-            　  <td>
+                <td>
                   <button type="submit" 
                   class="btnbtn-primary" 
                   onclick=>

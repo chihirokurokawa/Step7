@@ -10,7 +10,11 @@
     <div class="search">
     <form action="{{ route('search') }}" method="POST">
             @csrf
-
+            <!-- @if(session('err_msg'))
+            <div class="alert alert-danger">
+            {{ session('err_msg') }}
+            </div>
+            @endif -->
     <div class="form-group">
         <div>
             <label for="">商品名

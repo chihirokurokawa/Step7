@@ -18,6 +18,9 @@ Route::get('/', 'MgtController@showList')->name('mgts');
 Route::get('/product/create', 'MgtController@showCreate')->name('create');
 //商品登録
 Route::post('/product/store', 'MgtController@exeStore')->name('store');
+// // 商品登録のConfig
+// Route::get('/messages', 'MgtController@exeStore');
+});
 //詳細を表示
 Route::get('/product/{id}', 'MgtController@showDetail')->name('show');
 
@@ -35,9 +38,9 @@ Auth::routes();
 //　商品結果画面
 Route::post('/product/keyword', 'MgtController@keyword')->name('search');
 Route::get('/product/keyword', 'MgtController@keyword')->name('search');
-// 　商品検索画面
+// 商品検索画面
 // Route::get('product/post', 'MgtController@post')->name('post');
-});
+
 
 Auth::routes();
 
