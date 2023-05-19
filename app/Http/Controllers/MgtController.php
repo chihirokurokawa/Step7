@@ -17,11 +17,24 @@ class MgtController extends Controller
      * 
      * @return view
      */
-    public function showList()
+    // public function showList()
+    // {
+    //     $products = (new Product())->getProducts();
+    //     $companies = (new Company())->getCompanies();
+    //     $product_sort = request()->input('sort', null);
+    //     return view('mgt.list', ['products' => $products, 'companies' => $companies]);
+    // }
+
+    public function showList(Request $request)
     {
+        $sortColumn = $request->get('sort', 'id');  // クエリパラメータからカラム名を取得
+        $sortDirection = $request->get('direction', 'asc');  // クエリパラメータから並び順を取得
+
         $products = (new Product())->getProducts();
+        // $products = (new Product())->getSortedProducts($sortColumn, $sortDirection);
         $companies = (new Company())->getCompanies();
-        return view('mgt.list', ['products' => $products, 'companies' => $companies]);
+        // dd($companies);
+        return view('mgt.list', ['products' => $products],['companies' => $companies]);
     }
 
     /**
@@ -33,11 +46,18 @@ class MgtController extends Controller
     {    
         $product_keyword = $request->input('product_keyword');
         $company_keyword = $request->input('company_keyword');
-
-        $products = (new Product)->searchProducts($product_keyword, $company_keyword);
+        $price_min = $request->input('price_min');
+        $price_max = $request->input('price_max');
+        $stock_min = $request->input('stock_min');
+        $stock_max = $request->input('stock_max');
+        $products = (new Product)->searchProducts($product_keyword, $company_keyword, $price_min, $price_max, $stock_min, $stock_max);
         $companies = (new Company())->getCompanies();
 
+        // dd($companies);
+
         return view('mgt.list', ['products' => $products],['companies' => $companies]);
+        // return view('mgt.list', compact($product_keyword, $company_keyword, $price_min, $price_max, $stock_min, $stock_max));
+
     }
 
 

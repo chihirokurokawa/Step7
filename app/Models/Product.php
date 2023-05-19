@@ -6,9 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Sale;
 use App\Models\Company;
 use Illuminate\Support\Facades\DB;
+use Kyslik\ColumnSortable\Sortable; 
 
 class Product extends Model
 {
+    use Sortable; 
+    public $sortable = ['id', 'name', 'price'];
+
     //テーブル名　テーブルとモデルが紐ずく
     protected $table ='products';
 
@@ -47,20 +51,54 @@ class Product extends Model
         return $companies;
     }
 
- public static function searchProducts($product_keyword, $company_keyword)
+//  public static function searchProducts($product_keyword, $company_keyword)
+//     {
+//         $query = DB::table('products')
+//             ->join('companies', 'products.company_id', '=', 'companies.id')
+//             ->select('products.id', 'img_path', 'product_name', 'price', 'stock', 'company_name');
+
+//         if(!empty($product_keyword)) {
+//             $query->where('product_name', 'LIKE', "%{$product_keyword}%");
+//         }
+//         if(!empty($company_keyword)) {
+//             $query->where('company_id', '=', "$company_keyword");
+//         }
+//         return $query->get();
+//     }
+
+    public static function searchProducts($product_keyword, $company_keyword, $price_min, $price_max, $stock_min, $stock_max)
     {
         $query = DB::table('products')
             ->join('companies', 'products.company_id', '=', 'companies.id')
             ->select('products.id', 'img_path', 'product_name', 'price', 'stock', 'company_name');
 
-        if(!empty($product_keyword)) {
+        if (!empty($product_keyword)) {
             $query->where('product_name', 'LIKE', "%{$product_keyword}%");
         }
-        if(!empty($company_keyword)) {
+
+        if (!empty($company_keyword)) {
             $query->where('company_id', '=', "$company_keyword");
         }
+
+        if (!empty($price_min)) {
+            $query->where('price', '>=', $price_min);
+        }
+
+        if (!empty($price_max)) {
+            $query->where('price', '<=', $price_max);
+        }
+
+        if (!empty($stock_min)) {
+            $query->where('stock', '>=', $stock_min);
+        }
+
+        if (!empty($stock_max)) {
+            $query->where('stock', '<=', $stock_max);
+        }
+
         return $query->get();
     }
+
 
     public static function getProductWithCompany($id)
     {
@@ -110,4 +148,20 @@ class Product extends Model
         $product->save();
     }
 
+    // public function sort($product_sort){
+    //     $product_sort= Product::sortable()->get(); //sortable() を先に宣言
+    // }
+
+
+    /**
+     * ソートされた商品情報を取得する
+     *
+     * @param  string  $sortColumn
+     * @param  string  $sortDirection
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getSortedProducts($sortColumn, $sortDirection)
+    {
+        return $this->orderBy($sortColumn, $sortDirection)->get();
+    }
 }
